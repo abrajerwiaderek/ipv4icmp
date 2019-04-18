@@ -11,12 +11,10 @@
 #include <dlfcn.h>
 #include "biblioteka.h"
 
-typedef unsigned char u8;
-typedef unsigned short int u16;
-void *Biblioteka; // wskaznik do bilbioteki
+void *Biblioteka;
 
 
-int main(void) {
+int main(int argc, char **argv) {
 
 	Biblioteka = dlopen("/home/student/Downloads/sendip-ipv4-icmp-master/src/biblioteka.so", RTLD_NOW);
 	  	if (!Biblioteka) {
@@ -24,10 +22,7 @@ int main(void) {
 	  		return (1);
 	  	}
 
-	  	typedef void (*Funkcja1)();
-	  	Funkcja1 printAuthor = (Funkcja1)dlsym(Biblioteka, "printAuthor");
-	  	printAuthor();
-	  	typedef void (*Funkcja2)();
-	  	Funkcja2 glowna = (Funkcja2)dlsym(Biblioteka, "glowna");
-	  	glowna();
+	  	typedef void (*Glowna)();
+	  	Glowna glowna = (Glowna)dlsym(Biblioteka, "glowna");
+	  	glowna(argc, argv);
 }
